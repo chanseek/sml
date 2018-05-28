@@ -70,8 +70,10 @@ val test1009 = check_pat (ConstructorP("x", (TupleP [Wildcard, Variable "x", Con
 val test1010 = check_pat (ConstructorP("x", (ConstructorP("y", TupleP [Variable "x", Variable "y"])))) = true
 val test1011 = check_pat (ConstructorP("x", (ConstructorP("y", TupleP [Variable "x", Variable "x"])))) = false
 val test1012 = check_pat (TupleP [Wildcard, Variable "x", TupleP [Variable "y"]]) = true
+val test1013 = check_pat (ConstructorP ("hi",TupleP[Variable "x",ConstructorP ("yo",TupleP[Variable "x",UnitP])])) = false
+val test1014 = check_pat (ConstructorP ("egg",ConstructorP ("egg",ConstP 4))) = true
+val test1015 = check_pat (TupleP[ConstP 17,Wildcard,ConstP 4,ConstructorP ("egg",ConstP 4),ConstructorP ("egg",ConstructorP ("egg",ConstP 4))]) = true
 
-(*
 val test11 = match (Const(1), UnitP) = NONE
 val test1101 = match (Const(1), ConstP 1) = SOME []
 val test1102 = match (Const(1), Variable "s") = SOME [("s", Const(1))]
@@ -84,9 +86,9 @@ val test1108 = match (Tuple [Const(1), Tuple [Unit]], TupleP [ConstP 1, TupleP[U
 val test1109 = match (Tuple [Const(1), Tuple [Unit, Const(2)]], TupleP [ConstP 1, TupleP[UnitP, Variable("s")]]) = SOME [("s", Const(2))]
 val test1110 = match (Tuple [Const(1), Tuple [Unit, Const(2)]], TupleP [ConstP 2, TupleP[UnitP, Variable("s")]]) = NONE
 val test1111 = match (Tuple [Const(1), Tuple [Unit, Const(2)]], TupleP [ConstP 1, TupleP[UnitP, Variable("s"), Wildcard]]) = NONE
+val test1112 = match (Tuple [Const(1), Const(2)], TupleP [Variable "x", Variable "y"]) = SOME [("x", Const(1)), ("y", Const(2))]
 
 val test12 = first_match Unit [UnitP] = SOME []
 val test1201 = first_match Unit [Variable ("s")] = SOME [("s", Unit)]
 val test1202 = first_match (Tuple [Const(1), Tuple [Unit, Const(2)]]) [(TupleP [ConstP 1, TupleP[UnitP, Variable("s")]])] = SOME [("s", Const(2))]
 val test1203 = first_match (Tuple [Const(1), Tuple [Unit, Const(2)]]) [(TupleP [ConstP 1, TupleP[UnitP, ConstP 3]])] = NONE
-*)
